@@ -6,6 +6,8 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
 import FadeIn from '@/components/FadeIn';
+import { useSiteSettings } from '@/hooks/useSiteSettings';
+import { makeWhatsappUrl } from '@/lib/site-settings';
 import { supabase } from '@/lib/supabase';
 import { getCurrentUser, updateProfile, getUserRequests, sendMessage, getConversation, getUnreadCount, markAsRead } from '@/lib/auth';
 
@@ -55,6 +57,7 @@ function timeAgo(dateStr: string) {
 
 export default function DashboardPage() {
   const router = useRouter();
+  const settings = useSiteSettings();
   const [user, setUser] = useState<UserProfile | null>(null);
   const [activeTab, setActiveTab] = useState('overview');
   const [requests, setRequests] = useState<Request[]>([]);
@@ -198,7 +201,7 @@ export default function DashboardPage() {
                 <div className="quick-actions">
                   <h3>Actions rapides</h3>
                   <div className="actions-grid">
-                    <a href="https://wa.me/2250779289599?text=Bonjour%2C%20je%20suis%20membre%20et%20je%20souhaite%20une%20consultation" target="_blank" rel="noopener noreferrer" className="action-card"><i className="fa-brands fa-whatsapp"></i><span>Parler à un conseiller</span></a>
+                    <a href={makeWhatsappUrl(settings.contact.whatsappNumber, 'Bonjour, je suis membre et je souhaite une consultation')} target="_blank" rel="noopener noreferrer" className="action-card"><i className="fa-brands fa-whatsapp"></i><span>Parler à un conseiller</span></a>
                     <Link href="/formation-canada" className="action-card"><i className="fa-solid fa-book-open"></i><span>Voir la formation</span></Link>
                     <Link href="/contact" className="action-card"><i className="fa-solid fa-envelope"></i><span>Nous contacter</span></Link>
                   </div>
@@ -307,7 +310,7 @@ export default function DashboardPage() {
                   <i className="fa-solid fa-rocket" style={{ fontSize: '2.5rem', color: 'var(--accent)', marginBottom: 16 }}></i>
                   <h3 style={{ marginBottom: 8 }}>Prochaine étape</h3>
                   <p style={{ color: 'var(--text-medium)', marginBottom: 24 }}>Contactez un conseiller pour planifier votre projet.</p>
-                  <a href="https://wa.me/2250779289599?text=Bonjour%2C%20je%20suis%20inscrit%20et%20je%20souhaite%20démarrer%20mon%20projet" target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp"><i className="fa-brands fa-whatsapp"></i> Démarrer mon projet</a>
+                  <a href={makeWhatsappUrl(settings.contact.whatsappNumber, 'Bonjour, je suis inscrit et je souhaite demarrer mon projet')} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp"><i className="fa-brands fa-whatsapp"></i> Démarrer mon projet</a>
                 </div>
               </div>
 
@@ -318,7 +321,7 @@ export default function DashboardPage() {
                   <i className="fa-solid fa-folder-open"></i>
                   <h3>Aucun document pour le moment</h3>
                   <p>Vos documents seront disponibles ici une fois votre accompagnement démarré.</p>
-                  <a href="https://wa.me/2250779289599?text=Bonjour%2C%20je%20souhaite%20démarrer%20mon%20accompagnement" target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ marginTop: 16 }}>Démarrer mon accompagnement <i className="fa-solid fa-arrow-right"></i></a>
+                  <a href={makeWhatsappUrl(settings.contact.whatsappNumber, 'Bonjour, je souhaite demarrer mon accompagnement')} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ marginTop: 16 }}>Démarrer mon accompagnement <i className="fa-solid fa-arrow-right"></i></a>
                 </div>
               </div>
             </div>

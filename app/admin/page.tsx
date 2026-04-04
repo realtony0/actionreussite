@@ -241,6 +241,7 @@ export default function AdminPage() {
   const pendingCount = requests.filter((request) => request.status === 'en_attente').length;
   const convoMsgs = currentReqId ? messages.filter((message) => message.request_id === currentReqId) : [];
   const currentReq = currentReqId ? requests.find((request) => request.id === currentReqId) : null;
+  const whatsappSocialIndex = settings.socialLinks.findIndex((social) => social.label.toLowerCase() === 'whatsapp' || social.className === 'whatsapp');
   const localImages = [
     ...Array.from({ length: 42 }, (_, i) => `/images/photo-${i + 1}.jpeg`),
     '/images/canada-fiche.jpeg',
@@ -386,9 +387,30 @@ export default function AdminPage() {
                 <div className="cms-field"><label>Nom de marque</label><input type="text" className="cms-input" value={settings.brand.name} onChange={(e) => updateSetting('brand.name', e.target.value)} /></div>
                 <div className="cms-field"><label>Logo</label><input type="text" className="cms-input" value={settings.brand.logoUrl} onChange={(e) => updateSetting('brand.logoUrl', e.target.value)} /></div>
                 <div className="cms-field"><label>Téléphone</label><input type="text" className="cms-input" value={settings.contact.phone} onChange={(e) => updateSetting('contact.phone', e.target.value)} /></div>
-                <div className="cms-field"><label>WhatsApp (numéro)</label><input type="text" className="cms-input" value={settings.contact.whatsappNumber} onChange={(e) => updateSetting('contact.whatsappNumber', e.target.value)} /></div>
+                <div className="cms-field"><label>WhatsApp principal (numéro ou lien)</label><input type="text" className="cms-input" value={settings.contact.whatsappNumber} onChange={(e) => updateSetting('contact.whatsappNumber', e.target.value)} /></div>
                 <div className="cms-field"><label>Adresse</label><input type="text" className="cms-input" value={settings.contact.address} onChange={(e) => updateSetting('contact.address', e.target.value)} /></div>
-                <div className="cms-field"><label>Prix formation Canada</label><input type="text" className="cms-input" value={settings.formationCanada.pricing.price} onChange={(e) => updateSetting('formationCanada.pricing.price', e.target.value)} /></div>
+                <div className="cms-field"><label>Prix formation Canada</label><input type="text" className="cms-input" value={settings.formationCanada.pricing.price} onChange={(e) => { updateSetting('formationCanada.pricing.price', e.target.value); updateSetting('canada.training.pricingStatus', e.target.value); }} /></div>
+              </div>
+            </div>
+
+            <div className="cms-section">
+              <h3><i className="fa-brands fa-whatsapp"></i> Contacts WhatsApp</h3>
+              <p className="cms-help">Le bouton WhatsApp principal accepte soit un numéro, soit un lien complet `wa.me/message/...`.</p>
+              <div className="cms-grid">
+                {whatsappSocialIndex >= 0 && (
+                  <div className="cms-field">
+                    <label>Lien WhatsApp réseau social</label>
+                    <input type="text" className="cms-input" value={settings.socialLinks[whatsappSocialIndex]?.url || ''} onChange={(e) => updateSetting(`socialLinks.${whatsappSocialIndex}.url`, e.target.value)} />
+                  </div>
+                )}
+                {settings.teamContacts.map((member, index) => (
+                  <div key={`${member.name}-${index}`} className="cms-field">
+                    <label>Contact équipe {index + 1}</label>
+                    <input type="text" className="cms-input" value={member.name} onChange={(e) => updateSetting(`teamContacts.${index}.name`, e.target.value)} />
+                    <input type="text" className="cms-input" style={{ marginTop: 8 }} value={member.role} onChange={(e) => updateSetting(`teamContacts.${index}.role`, e.target.value)} />
+                    <input type="text" className="cms-input" style={{ marginTop: 8 }} value={member.link} onChange={(e) => updateSetting(`teamContacts.${index}.link`, e.target.value)} />
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -429,8 +451,8 @@ export default function AdminPage() {
                 <div className="cms-field"><label>Titre page Formation</label><input type="text" className="cms-input" value={settings.formationCanada.header.title} onChange={(e) => updateSetting('formationCanada.header.title', e.target.value)} /></div>
                 <div className="cms-field"><label>Session Canada</label><input type="text" className="cms-input" value={settings.canada.training.sessionTitle} onChange={(e) => updateSetting('canada.training.sessionTitle', e.target.value)} /></div>
                 <div className="cms-field"><label>Session Formation</label><input type="text" className="cms-input" value={settings.formationCanada.session.title} onChange={(e) => updateSetting('formationCanada.session.title', e.target.value)} /></div>
-                <div className="cms-field"><label>Statut inscription</label><input type="text" className="cms-input" value={settings.canada.training.pricingStatus} onChange={(e) => updateSetting('canada.training.pricingStatus', e.target.value)} /></div>
-                <div className="cms-field"><label>Prix formation</label><input type="text" className="cms-input" value={settings.formationCanada.pricing.price} onChange={(e) => updateSetting('formationCanada.pricing.price', e.target.value)} /></div>
+                <div className="cms-field"><label>Prix / statut carte Canada</label><input type="text" className="cms-input" value={settings.canada.training.pricingStatus} onChange={(e) => updateSetting('canada.training.pricingStatus', e.target.value)} /></div>
+                <div className="cms-field"><label>Prix formation</label><input type="text" className="cms-input" value={settings.formationCanada.pricing.price} onChange={(e) => { updateSetting('formationCanada.pricing.price', e.target.value); updateSetting('canada.training.pricingStatus', e.target.value); }} /></div>
               </div>
               <div className="cms-field"><label>Urgence formation</label><input type="text" className="cms-input" value={settings.formationCanada.pricing.urgency} onChange={(e) => updateSetting('formationCanada.pricing.urgency', e.target.value)} /></div>
             </div>

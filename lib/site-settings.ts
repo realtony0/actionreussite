@@ -1,4 +1,5 @@
 export const SITE_ASSET_BUCKET = 'site-assets';
+const PRIMARY_WHATSAPP_LINK = 'https://wa.me/message/J3ZH2UX7XSHOH1';
 
 function buildDefaultSiteSettings() {
   return {
@@ -10,7 +11,7 @@ function buildDefaultSiteSettings() {
     },
     contact: {
       phone: '+225 07 79 28 95 99',
-      whatsappNumber: '2250779289599',
+      whatsappNumber: PRIMARY_WHATSAPP_LINK,
       address: 'Abidjan, Marcory',
       mapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15889.77!2d-3.9895!3d5.3045!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfc1eb5a4b3b7b6f%3A0x3c2b7b7b7b7b7b7b!2sMarcory%2C%20Abidjan!5e0!3m2!1sfr!2sci!4v1',
       responsePromise: 'Réponse garantie sous 24h.',
@@ -32,12 +33,12 @@ function buildDefaultSiteSettings() {
       { label: 'Facebook', url: 'https://www.facebook.com/share/1CcyRSopw9/?mibextid=wwXIfr', icon: 'fa-facebook-f', className: 'facebook' },
       { label: 'Instagram', url: 'https://www.instagram.com/action_reussite?igsh=YXQ1em1vcWF6ZWxk&utm_source=qr', icon: 'fa-instagram', className: 'instagram' },
       { label: 'TikTok', url: 'https://www.tiktok.com/@action.reussite?_r=1&_t=ZS-95AEBRE4ZtN', icon: 'fa-tiktok', className: 'tiktok' },
-      { label: 'WhatsApp', url: 'https://wa.me/2250779289599', icon: 'fa-whatsapp', className: 'whatsapp' },
+      { label: 'WhatsApp', url: PRIMARY_WHATSAPP_LINK, icon: 'fa-whatsapp', className: 'whatsapp' },
     ],
     teamContacts: [
-      { name: 'Mr Lopez Aka', role: 'PDG, ACTION RÉUSSITE', link: 'https://wa.me/message/RNF754PNZDDOB1' },
-      { name: 'Mr Comoé Havila', role: 'Directeur Marketing', link: 'https://wa.me/2250779289599' },
-      { name: 'Mr Mickaël Assalé', role: 'Chargé clientèle', link: 'https://wa.me/message/A6QHXGURJUQRM1' },
+      { name: 'MR Havila Comoe', role: 'Directeur marketing', link: 'https://wa.me/message/J3ZH2UX7XSHOH1' },
+      { name: 'MR Lopez Aka', role: 'PDG ACTION REUSSITE', link: 'https://wa.me/message/A6QHXGURJUQRM1' },
+      { name: 'MR Assalé Mickaël', role: 'Directeur chargé à la clientèle', link: 'https://wa.me/message/RNF754PNZDDOB1' },
     ],
     home: {
       hero: {
@@ -69,7 +70,7 @@ function buildDefaultSiteSettings() {
           name: 'Chine 🇨🇳',
           image: '/images/photo-36.jpeg',
           description: '+52 universités partenaires, accompagnement complet de A à Z.',
-          link: 'https://wa.me/2250779289599?text=Bonjour%2C%20je%20suis%20intéressé(e)%20par%20les%20études%20en%20Chine',
+          link: PRIMARY_WHATSAPP_LINK,
           internal: false,
           tags: ['Bourses disponibles', 'Rentrée Sept. 2026', 'Licence / Master'],
         },
@@ -85,7 +86,7 @@ function buildDefaultSiteSettings() {
           name: 'Inde 🇮🇳',
           image: '/images/inde-fiche.jpeg',
           description: 'Programmes accessibles, universités reconnues internationalement.',
-          link: 'https://wa.me/2250779289599?text=Bonjour%2C%20je%20suis%20intéressé(e)%20par%20les%20études%20en%20Inde',
+          link: PRIMARY_WHATSAPP_LINK,
           internal: false,
           tags: ['Bourses disponibles', 'Rentrée Sept. 2026', 'Licence / Master / Doctorat'],
         },
@@ -93,7 +94,7 @@ function buildDefaultSiteSettings() {
           name: 'Turquie 🇹🇷',
           image: '/images/turquie-fiche.jpeg',
           description: 'Bourses turques généreuses et admission dans des universités de qualité.',
-          link: 'https://wa.me/2250779289599?text=Bonjour%2C%20je%20suis%20intéressé(e)%20par%20les%20études%20en%20Turquie',
+          link: PRIMARY_WHATSAPP_LINK,
           internal: false,
           tags: ['Bourses disponibles', 'Rentrée Sept. 2026', 'Licence / Master'],
         },
@@ -101,7 +102,7 @@ function buildDefaultSiteSettings() {
           name: 'Maroc 🇲🇦',
           image: '/images/photo-35.jpeg',
           description: 'Études francophones de qualité à coût accessible.',
-          link: 'https://wa.me/2250779289599?text=Bonjour%2C%20je%20suis%20intéressé(e)%20par%20les%20études%20au%20Maroc',
+          link: PRIMARY_WHATSAPP_LINK,
           internal: false,
           tags: ['Coût accessible', 'Rentrée Sept. 2026', 'Licence / Master'],
         },
@@ -109,7 +110,7 @@ function buildDefaultSiteSettings() {
           name: 'France 🇫🇷',
           image: '/images/photo-34.jpeg',
           description: 'Campus France, bourses et admission dans les universités françaises.',
-          link: 'https://wa.me/2250779289599?text=Bonjour%2C%20je%20suis%20intéressé(e)%20par%20les%20études%20en%20France',
+          link: PRIMARY_WHATSAPP_LINK,
           internal: false,
           tags: ['Bourses disponibles', 'Rentrée Sept. 2026', 'Licence / Master'],
         },
@@ -234,8 +235,8 @@ function buildDefaultSiteSettings() {
         sessionSubtitle: 'Durée : 1 semaine intensive — Places limitées',
         pricingTitle: "S'inscrire à la formation",
         pricingSubtitle: 'Formation complète Canada',
-        pricingStatus: 'Inscription ouverte',
-        pricingNote: 'Paiement en ligne sécurisé',
+        pricingStatus: '250 000 FCFA',
+        pricingNote: 'Paiement en ligne sécurisé — Accès immédiat',
         features: [
           'Accès à la formation complète',
           'Support PDF téléchargeables',
@@ -292,7 +293,7 @@ function buildDefaultSiteSettings() {
         badge: 'PLACES LIMITÉES',
         title: 'Formation Canada',
         subtitle: 'Toutes les démarches de A à Z',
-        price: '50 000 FCFA',
+        price: '250 000 FCFA',
         note: 'Paiement en ligne sécurisé — Accès immédiat',
         urgency: 'Places limitées — Session juillet 2026',
         features: [
@@ -430,6 +431,7 @@ function mapLegacySettings(raw: Record<string, unknown>): DeepPartial<SiteSettin
       ...legacy.canada,
       training: {
         ...defaultSiteSettings.canada.training,
+        pricingStatus: typeof raw.formationPrix === 'string' ? raw.formationPrix : defaultSiteSettings.canada.training.pricingStatus,
         sessionTitle: typeof raw.formationSession === 'string' ? `Prochaine session : ${raw.formationSession}` : defaultSiteSettings.canada.training.sessionTitle,
       },
     };
@@ -477,7 +479,10 @@ export function normalizeSiteSettings(raw?: Record<string, unknown> | null): Sit
 }
 
 export function makeWhatsappUrl(whatsappNumber: string, text?: string) {
-  const sanitized = whatsappNumber.replace(/\D/g, '');
+  const rawValue = whatsappNumber.trim();
+  if (/^https?:\/\//i.test(rawValue)) return rawValue;
+
+  const sanitized = rawValue.replace(/\D/g, '');
   if (!text) return `https://wa.me/${sanitized}`;
   return `https://wa.me/${sanitized}?text=${encodeURIComponent(text)}`;
 }
