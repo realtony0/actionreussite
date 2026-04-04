@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import { defaultSiteSettings, normalizeSiteSettings, SITE_ASSET_BUCKET, type SiteSettings } from './site-settings';
 
 // ===== AUTH HELPERS =====
 
@@ -317,30 +318,8 @@ export async function getAllMessages() {
 
 // ===== SITE SETTINGS (CMS) =====
 
-export function getDefaultSettings() {
-  return {
-    heroTitle: "Bourse + admission + visa en 60 jours grâce à <span>ACTION RÉUSSITE</span>",
-    heroBadge: "Rentrée Septembre 2026 — Places limitées",
-    heroSubtext: "Nous prenons en charge votre projet d'études de A à Z : choix de pays, admission, visa et départ. Selon votre profil, en 60 jours vous pouvez tout obtenir.",
-    heroProof: "+229 étudiants déjà envoyés à l'étranger depuis 2017",
-    heroImages: ["/images/photo-1.jpeg", "/images/photo-2.jpeg", "/images/photo-3.jpeg"],
-    destChine: "/images/photo-36.jpeg",
-    destCanada: "/images/photo-5.jpeg",
-    destInde: "/images/photo-6.jpeg",
-    destTurquie: "/images/photo-7.jpeg",
-    destMaroc: "/images/photo-35.jpeg",
-    destFrance: "/images/photo-34.jpeg",
-    statEtudiants: "229",
-    statAnnees: "8",
-    statPays: "6",
-    statSatisfaction: "98",
-    formationPrix: "50 000 FCFA",
-    formationSession: "Fin juillet 2026",
-    contactPhone: "+225 07 79 28 95 99",
-    contactAddress: "Abidjan, Marcory",
-    contactWhatsapp: "2250779289599",
-    testimonialImages: ["/images/photo-30.jpeg", "/images/photo-31.jpeg", "/images/photo-32.jpeg", "/images/photo-38.jpeg"],
-  };
+export function getDefaultSettings(): SiteSettings {
+  return JSON.parse(JSON.stringify(defaultSiteSettings)) as SiteSettings;
 }
 
 export async function getSiteSettings() {
@@ -350,10 +329,7 @@ export async function getSiteSettings() {
     .eq('id', 1)
     .single();
 
-  if (data?.settings) {
-    return { ...getDefaultSettings(), ...data.settings };
-  }
-  return getDefaultSettings();
+  return normalizeSiteSettings((data?.settings as Record<string, unknown> | null) ?? null);
 }
 
 export async function saveSiteSettings(settings: Record<string, unknown>) {
@@ -361,4 +337,25 @@ export async function saveSiteSettings(settings: Record<string, unknown>) {
     .from('site_settings')
     .upsert({ id: 1, settings, updated_at: new Date().toISOString() });
   return !error;
+}
+
+export async function uploadSiteAsset(file: File) {
+  const extension = file.name.includes('.') ? file.name.split('.').pop()?.toLowerCase() || 'bin' : 'bin';
+  const folder = file.type.startsWith('video/') ? 'videos' : 'images';
+  const path = `${folder}/${Date.now()}-${crypto.randomUUID()}.${extension}`;
+
+  const { error } = await supabase.storage
+    .from(SITE_ASSET_BUCKET)
+    .upload(path, file, {
+      cacheControl: '3600',
+      upsert: false,
+      contentType: file.type || undefined,
+    });
+
+  if (error) {
+    return { success: false, message: error.message };
+  }
+
+  const { data } = supabase.storage.from(SITE_ASSET_BUCKET).getPublicUrl(path);
+  return { success: true, url: data.publicUrl, path };
 }

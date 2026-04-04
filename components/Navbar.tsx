@@ -1,14 +1,16 @@
 'use client';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useSiteSettings } from '@/hooks/useSiteSettings';
+import { makeWhatsappUrl } from '@/lib/site-settings';
 import { supabase } from '@/lib/supabase';
 
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState<unknown>(null);
+  const settings = useSiteSettings();
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => setUser(data.user));
@@ -22,8 +24,8 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="container">
         <Link href="/" className="nav-logo">
-          <Image src="/images/logo.jpeg" alt="Action Réussite" width={45} height={45} />
-          <span>Action Réussite</span>
+          <img src={settings.brand.logoUrl} alt={settings.brand.name} width={45} height={45} />
+          <span>{settings.brand.name}</span>
         </Link>
         <div className={`nav-links${menuOpen ? ' active' : ''}`}>
           <Link href="/" className={pathname === '/' ? 'active' : ''} onClick={() => setMenuOpen(false)}>Accueil</Link>
@@ -35,7 +37,7 @@ export default function Navbar() {
               <i className="fa-solid fa-user-circle"></i> Mon Espace
             </Link>
           ) : (
-            <a href="https://wa.me/2250779289599" target="_blank" rel="noopener noreferrer" className="nav-cta">
+            <a href={makeWhatsappUrl(settings.contact.whatsappNumber)} target="_blank" rel="noopener noreferrer" className="nav-cta">
               <i className="fa-brands fa-whatsapp"></i> WhatsApp
             </a>
           )}

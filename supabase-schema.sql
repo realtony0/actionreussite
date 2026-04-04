@@ -108,3 +108,62 @@ CREATE POLICY "Allow all requests insert" ON requests FOR INSERT TO anon WITH CH
 CREATE POLICY "Allow all requests update" ON requests FOR UPDATE TO anon USING (true);
 CREATE POLICY "Allow all site_settings update" ON site_settings FOR UPDATE TO anon USING (true);
 CREATE POLICY "Allow auth site_settings update" ON site_settings FOR UPDATE TO authenticated USING (true);
+
+-- ===== STORAGE FOR VERCEL-COMPATIBLE MEDIA UPLOADS =====
+
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES (
+  'site-assets',
+  'site-assets',
+  true,
+  52428800,
+  ARRAY['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml', 'video/mp4', 'video/webm', 'video/quicktime']
+)
+ON CONFLICT (id) DO UPDATE
+SET public = EXCLUDED.public,
+    file_size_limit = EXCLUDED.file_size_limit,
+    allowed_mime_types = EXCLUDED.allowed_mime_types;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'storage' AND tablename = 'objects' AND policyname = 'Public read site assets'
+  ) THEN
+    CREATE POLICY "Public read site assets"
+    ON storage.objects FOR SELECT
+    TO public
+    USING (bucket_id = 'site-assets');
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'storage' AND tablename = 'objects' AND policyname = 'Public upload site assets'
+  ) THEN
+    CREATE POLICY "Public upload site assets"
+    ON storage.objects FOR INSERT
+    TO anon, authenticated
+    WITH CHECK (bucket_id = 'site-assets');
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'storage' AND tablename = 'objects' AND policyname = 'Public update site assets'
+  ) THEN
+    CREATE POLICY "Public update site assets"
+    ON storage.objects FOR UPDATE
+    TO anon, authenticated
+    USING (bucket_id = 'site-assets')
+    WITH CHECK (bucket_id = 'site-assets');
+  END IF;
+
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE schemaname = 'storage' AND tablename = 'objects' AND policyname = 'Public delete site assets'
+  ) THEN
+    CREATE POLICY "Public delete site assets"
+    ON storage.objects FOR DELETE
+    TO anon, authenticated
+    USING (bucket_id = 'site-assets');
+  END IF;
+END $$;
