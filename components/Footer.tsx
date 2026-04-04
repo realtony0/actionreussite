@@ -31,6 +31,7 @@ export default function Footer() {
               <li><Link href="/">Accueil</Link></li>
               <li><Link href="/canada">Étudier au Canada</Link></li>
               <li><Link href="/formation-canada">Formation Canada</Link></li>
+              <li><Link href="/galerie">Galerie</Link></li>
               <li><Link href="/contact">Contact</Link></li>
             </ul>
           </div>

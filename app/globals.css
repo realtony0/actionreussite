@@ -178,6 +178,15 @@ ul { list-style: none; }
 .page-header h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 12px; }
 .page-header p { font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
 
+/* ===== LIGHTBOX ===== */
+.lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+.lightbox-img { max-width: 90%; max-height: 85vh; border-radius: var(--radius); object-fit: contain; }
+.lightbox-close { position: absolute; top: 20px; right: 24px; background: none; border: none; color: white; font-size: 2.5rem; cursor: pointer; z-index: 10000; line-height: 1; }
+.lightbox-prev, .lightbox-next { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.15); border: none; color: white; font-size: 2.5rem; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+.lightbox-prev:hover, .lightbox-next:hover { background: rgba(255,255,255,0.3); }
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+
 /* ===== CANADA OPTIONS ===== */
 .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
 .option-card { padding: 40px; border-radius: var(--radius-lg); background: var(--bg-white); box-shadow: var(--shadow); transition: var(--transition); border: 2px solid transparent; }

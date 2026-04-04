@@ -31,6 +31,7 @@ export default function Navbar() {
           <Link href="/" className={pathname === '/' ? 'active' : ''} onClick={() => setMenuOpen(false)}>Accueil</Link>
           <Link href="/canada" className={pathname === '/canada' ? 'active' : ''} onClick={() => setMenuOpen(false)}>Étudier au Canada</Link>
           <Link href="/formation-canada" className={pathname === '/formation-canada' ? 'active' : ''} onClick={() => setMenuOpen(false)}>Formation</Link>
+          <Link href="/galerie" className={pathname === '/galerie' ? 'active' : ''} onClick={() => setMenuOpen(false)}>Galerie</Link>
           <Link href="/contact" className={pathname === '/contact' ? 'active' : ''} onClick={() => setMenuOpen(false)}>Contact</Link>
           {user ? (
             <Link href="/dashboard" className="nav-cta" onClick={() => setMenuOpen(false)}>
