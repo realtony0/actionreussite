@@ -174,7 +174,7 @@ ul { list-style: none; }
 .footer-team li a i { color: #25D366; }
 
 /* ===== PAGE HEADER ===== */
-.page-header { padding: 140px 0 80px; background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%); color: white; text-align: center; }
+.page-header { padding: 140px 0 80px; background: linear-gradient(135deg, #0a1628 0%, #1b2a4a 100%); color: white; text-align: center; }
 .page-header h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 12px; }
 .page-header p { font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
 
