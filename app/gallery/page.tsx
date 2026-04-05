@@ -1,5 +1,8 @@
 import fs from 'fs';
 import path from 'path';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import WhatsAppFloat from '@/components/WhatsAppFloat';
 
 const galleryDir = path.join(process.cwd(), 'public', 'gallery');
 const galleryImages = fs.existsSync(galleryDir)
@@ -11,27 +14,33 @@ const galleryImages = fs.existsSync(galleryDir)
 
 export default function GalleryPage() {
   return (
-    <main className="container">
-      <section className="section">
-        <div className="section-title">
-          <h1>Galerie</h1>
-          <p>Découvrez nos dernières photos ajoutées.</p>
-          <div className="line"></div>
-        </div>
-        {galleryImages.length === 0 ? (
-          <p>Aucune image trouvée dans le dossier <strong>/public/gallery</strong>.</p>
-        ) : (
-          <div className="gallery-grid" style={{ marginTop: 24 }}>
-            {galleryImages.map((image) => (
-              <img
-                key={image}
-                src={`/gallery/${encodeURIComponent(image)}`}
-                alt={`Galerie ${image}`}
-              />
-            ))}
-          </div>
-        )}
+    <>
+      <Navbar />
+      <section className="page-header">
+        <h1>Galerie</h1>
+        <p>Découvrez nos dernières photos ajoutées.</p>
       </section>
-    </main>
+
+      <section className="section">
+        <div className="container">
+          {galleryImages.length === 0 ? (
+            <p>Aucune image trouvée.</p>
+          ) : (
+            <div className="gallery-grid">
+              {galleryImages.map((image) => (
+                <img
+                  key={image}
+                  src={`/gallery/${encodeURIComponent(image)}`}
+                  alt={`Galerie ${image}`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      <WhatsAppFloat />
+      <Footer />
+    </>
   );
 }
