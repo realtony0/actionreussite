@@ -1,5 +1,5 @@
 export const SITE_ASSET_BUCKET = 'site-assets';
-const PRIMARY_WHATSAPP_LINK = 'https://wa.me/message/J3ZH2UX7XSHOH1';
+const PRIMARY_WHATSAPP_LINK = 'https://wa.me/message/A6QHXGURJUQRM1';
 
 function buildDefaultSiteSettings() {
   return {
@@ -36,7 +36,7 @@ function buildDefaultSiteSettings() {
       { label: 'WhatsApp', url: PRIMARY_WHATSAPP_LINK, icon: 'fa-whatsapp', className: 'whatsapp' },
     ],
     teamContacts: [
-      { name: 'MR Havila Comoe', role: 'Directeur marketing', link: 'https://wa.me/message/J3ZH2UX7XSHOH1' },
+      { name: 'MR Havila Comoe', role: 'Directeur marketing', link: 'https://wa.me/message/A6QHXGURJUQRM1' },
       { name: 'MR Lopez Aka', role: 'PDG ACTION REUSSITE', link: 'https://wa.me/message/A6QHXGURJUQRM1' },
       { name: 'MR Assalé Mickaël', role: 'Directeur chargé à la clientèle', link: 'https://wa.me/message/RNF754PNZDDOB1' },
     ],
