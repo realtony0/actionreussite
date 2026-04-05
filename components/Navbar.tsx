@@ -30,6 +30,7 @@ export default function Navbar() {
         <div className={`nav-links${menuOpen ? ' active' : ''}`}>
           <Link href="/" className={pathname === '/' ? 'active' : ''} onClick={() => setMenuOpen(false)}>Accueil</Link>
           <Link href="/canada" className={pathname === '/canada' ? 'active' : ''} onClick={() => setMenuOpen(false)}>Étudier au Canada</Link>
+          <Link href="/gallery" className={pathname === '/gallery' ? 'active' : ''} onClick={() => setMenuOpen(false)}>Galerie</Link>
           <Link href="/formation-canada" className={pathname === '/formation-canada' ? 'active' : ''} onClick={() => setMenuOpen(false)}>Formation</Link>
           <Link href="/contact" className={pathname === '/contact' ? 'active' : ''} onClick={() => setMenuOpen(false)}>Contact</Link>
           {user ? (
