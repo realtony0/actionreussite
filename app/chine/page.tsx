@@ -209,8 +209,26 @@ export default function ChinePage() {
         </div>
       </section>
 
-      {/* PREUVE SOCIALE */}
+      {/* VISAS OBTENUS */}
       <section className="section section-alt">
+        <div className="container">
+          <FadeIn>
+            <div className="section-title">
+              <h2>Des visas obtenus, des rêves réalisés</h2>
+              <p>Nos étudiants ont reçu leur visa pour la Chine. La preuve en images.</p>
+              <div className="line"></div>
+            </div>
+          </FadeIn>
+          <div className="gallery-grid">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+              <img key={n} src={`/images/visas/visa-chine-${n}.jpeg`} alt={`Visa Chine obtenu ${n}`} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PREUVE SOCIALE */}
+      <section className="section">
         <div className="container">
           <FadeIn>
             <div className="section-title">
