@@ -68,7 +68,7 @@ INSERT INTO site_settings (id, settings) VALUES (1, '{
   "formationSession": "Fin juillet 2026",
   "contactPhone": "+225 07 79 28 95 99",
   "contactAddress": "Abidjan, Marcory",
-  "contactWhatsapp": "https://wa.me/message/J3ZH2UX7XSHOH1",
+  "contactWhatsapp": "https://wa.me/2250576911899",
   "testimonialImages": ["/images/photo-30.jpeg", "/images/photo-31.jpeg", "/images/photo-32.jpeg", "/images/photo-38.jpeg"]
 }'::jsonb) ON CONFLICT (id) DO NOTHING;
 
