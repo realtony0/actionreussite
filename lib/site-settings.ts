@@ -1,5 +1,5 @@
 export const SITE_ASSET_BUCKET = 'site-assets';
-const PRIMARY_WHATSAPP_LINK = 'https://wa.me/message/A6QHXGURJUQRM1';
+const PRIMARY_WHATSAPP_LINK = 'https://wa.me/2250576911899';
 
 function buildDefaultSiteSettings() {
   return {
@@ -10,7 +10,7 @@ function buildDefaultSiteSettings() {
       copyright: '2017–2026 Action Réussite. Tous droits réservés.',
     },
     contact: {
-      phone: '+225 07 79 28 95 99',
+      phone: '+225 05 76 91 18 99',
       whatsappNumber: PRIMARY_WHATSAPP_LINK,
       address: 'Abidjan, Marcory',
       mapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15889.77!2d-3.9895!3d5.3045!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfc1eb5a4b3b7b6f%3A0x3c2b7b7b7b7b7b7b!2sMarcory%2C%20Abidjan!5e0!3m2!1sfr!2sci!4v1',
@@ -36,9 +36,9 @@ function buildDefaultSiteSettings() {
       { label: 'WhatsApp', url: PRIMARY_WHATSAPP_LINK, icon: 'fa-whatsapp', className: 'whatsapp' },
     ],
     teamContacts: [
-      { name: 'MR Havila Comoe', role: 'Directeur marketing', link: 'https://wa.me/message/A6QHXGURJUQRM1' },
-      { name: 'MR Lopez Aka', role: 'PDG ACTION REUSSITE', link: 'https://wa.me/message/A6QHXGURJUQRM1' },
-      { name: 'MR Assalé Mickaël', role: 'Directeur chargé à la clientèle', link: 'https://wa.me/message/RNF754PNZDDOB1' },
+      { name: 'MR Lopez Aka', role: 'PDG ACTION REUSSITE', link: 'https://wa.me/2250576911899' },
+      { name: 'MR Assalé Mickaël', role: 'Directeur chargé à la clientèle', link: 'https://wa.me/2250720214753' },
+      { name: 'MR Havilla Comoe', role: 'Directeur Marketing', link: 'https://wa.me/2250779289599' },
     ],
     home: {
       hero: {
