@@ -220,7 +220,7 @@ export default function ChinePage() {
             </div>
           </FadeIn>
           <div className="gallery-grid">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((n) => (
               <img key={n} src={`/images/visas/visa-chine-${n}.jpeg`} alt={`Visa Chine obtenu ${n}`} />
             ))}
           </div>
@@ -237,8 +237,14 @@ export default function ChinePage() {
               <div className="line"></div>
             </div>
           </FadeIn>
-          <div className="gallery-grid">
-            <img src="/images/photo-36.jpeg" alt="Étudiant en Chine" />
+          <div className="videos-grid">
+            {[1, 2, 3].map((n) => (
+              <div key={n} className="video-wrapper">
+                <video controls>
+                  <source src={`/videos/chine-${n}.mp4`} type="video/mp4" />
+                </video>
+              </div>
+            ))}
           </div>
         </div>
       </section>
