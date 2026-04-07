@@ -480,6 +480,22 @@ export function normalizeSiteSettings(raw?: Record<string, unknown> | null): Sit
   // Force the primary WhatsApp number so database values cannot override it
   merged.contact.whatsappNumber = PRIMARY_WHATSAPP_LINK;
 
+  // Force WhatsApp link in social links and destinations
+  if (merged.socialLinks) {
+    for (const link of merged.socialLinks) {
+      if (link.className === 'whatsapp' || link.label === 'WhatsApp') {
+        link.url = PRIMARY_WHATSAPP_LINK;
+      }
+    }
+  }
+  if (merged.home?.destinations) {
+    for (const dest of merged.home.destinations) {
+      if (!dest.internal && dest.link.includes('wa.me')) {
+        dest.link = PRIMARY_WHATSAPP_LINK;
+      }
+    }
+  }
+
   return merged;
 }
 
