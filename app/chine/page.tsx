@@ -237,8 +237,14 @@ export default function ChinePage() {
               <div className="line"></div>
             </div>
           </FadeIn>
-          <div className="gallery-grid">
-            <img src="/images/photo-36.jpeg" alt="Étudiant en Chine" />
+          <div className="videos-grid">
+            {[1, 2, 3].map((n) => (
+              <div key={n} className="video-wrapper">
+                <video controls>
+                  <source src={`/videos/chine-${n}.mp4`} type="video/mp4" />
+                </video>
+              </div>
+            ))}
           </div>
         </div>
       </section>
