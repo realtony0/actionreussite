@@ -1,5 +1,5 @@
 export const SITE_ASSET_BUCKET = 'site-assets';
-const PRIMARY_WHATSAPP_LINK = 'https://wa.me/2250576911899';
+const PRIMARY_WHATSAPP_LINK = 'https://wa.me/message/A6QHXGURJUQRM1';
 
 function buildDefaultSiteSettings() {
   return {
