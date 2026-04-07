@@ -1,5 +1,5 @@
 export const SITE_ASSET_BUCKET = 'site-assets';
-const PRIMARY_WHATSAPP_LINK = 'https://wa.me/message/A6QHXGURJUQRM1';
+const PRIMARY_WHATSAPP_LINK = 'https://wa.me/2250576911899';
 
 function buildDefaultSiteSettings() {
   return {
@@ -480,7 +480,13 @@ export function normalizeSiteSettings(raw?: Record<string, unknown> | null): Sit
 
 export function makeWhatsappUrl(whatsappNumber: string, text?: string) {
   const rawValue = whatsappNumber.trim();
-  if (/^https?:\/\//i.test(rawValue)) return rawValue;
+
+  if (/^https?:\/\//i.test(rawValue)) {
+    if (!text) return rawValue;
+    const url = new URL(rawValue);
+    url.searchParams.set('text', text);
+    return url.toString();
+  }
 
   const sanitized = rawValue.replace(/\D/g, '');
   if (!text) return `https://wa.me/${sanitized}`;
