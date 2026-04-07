@@ -10,7 +10,7 @@ function buildDefaultSiteSettings() {
       copyright: '2017–2026 Action Réussite. Tous droits réservés.',
     },
     contact: {
-      phone: '+225 07 79 28 95 99',
+      phone: '+225 05 76 91 18 99',
       whatsappNumber: PRIMARY_WHATSAPP_LINK,
       address: 'Abidjan, Marcory',
       mapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15889.77!2d-3.9895!3d5.3045!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfc1eb5a4b3b7b6f%3A0x3c2b7b7b7b7b7b7b!2sMarcory%2C%20Abidjan!5e0!3m2!1sfr!2sci!4v1',
@@ -477,7 +477,8 @@ export function normalizeSiteSettings(raw?: Record<string, unknown> | null): Sit
   const legacy = mapLegacySettings(raw);
   const merged = deepMerge(deepMerge(base, legacy), raw);
 
-  // Force the primary WhatsApp number so database values cannot override it
+  // Force the primary contact info so database values cannot override it
+  merged.contact.phone = '+225 05 76 91 18 99';
   merged.contact.whatsappNumber = PRIMARY_WHATSAPP_LINK;
 
   // Force WhatsApp link in social links and destinations
