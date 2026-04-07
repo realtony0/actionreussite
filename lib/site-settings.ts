@@ -475,7 +475,12 @@ export function normalizeSiteSettings(raw?: Record<string, unknown> | null): Sit
   if (!raw) return base;
 
   const legacy = mapLegacySettings(raw);
-  return deepMerge(deepMerge(base, legacy), raw);
+  const merged = deepMerge(deepMerge(base, legacy), raw);
+
+  // Force the primary WhatsApp number so database values cannot override it
+  merged.contact.whatsappNumber = PRIMARY_WHATSAPP_LINK;
+
+  return merged;
 }
 
 export function makeWhatsappUrl(whatsappNumber: string, text?: string) {
