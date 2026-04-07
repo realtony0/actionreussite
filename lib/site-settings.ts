@@ -36,9 +36,9 @@ function buildDefaultSiteSettings() {
       { label: 'WhatsApp', url: PRIMARY_WHATSAPP_LINK, icon: 'fa-whatsapp', className: 'whatsapp' },
     ],
     teamContacts: [
-      { name: 'MR Havila Comoe', role: 'Directeur marketing', link: 'https://wa.me/message/A6QHXGURJUQRM1' },
-      { name: 'MR Lopez Aka', role: 'PDG ACTION REUSSITE', link: 'https://wa.me/message/A6QHXGURJUQRM1' },
-      { name: 'MR Assalé Mickaël', role: 'Directeur chargé à la clientèle', link: 'https://wa.me/message/RNF754PNZDDOB1' },
+      { name: 'MR Lopez Aka', role: 'PDG ACTION REUSSITE', link: 'https://wa.me/2250576911899' },
+      { name: 'MR Assalé Mickaël', role: 'Directeur chargé à la clientèle', link: 'https://wa.me/2250720214753' },
+      { name: 'MR Havilla Comoe', role: 'Directeur Marketing', link: 'https://wa.me/2250779289599' },
     ],
     home: {
       hero: {
@@ -146,8 +146,8 @@ function buildDefaultSiteSettings() {
         subtitle: 'Ce ne sont pas des promesses — ce sont des résultats. Voyez par vous-même.',
         ctaLabel: 'Je veux être le prochain',
         items: [
-          { src: '/videos/temoignage.mp4', poster: '/images/photo-10.jpeg' },
-          { src: '/videos/temoignage-2.mp4', poster: '/images/photo-30.jpeg' },
+          { src: '/videos/temoignage.mp4', poster: '/images/poster-chine.jpg' },
+          { src: '/videos/temoignage-2.mp4', poster: '/images/poster-canada.jpg' },
         ],
       },
       testimonials: {
