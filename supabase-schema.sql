@@ -64,7 +64,7 @@ INSERT INTO site_settings (id, settings) VALUES (1, '{
   "statAnnees": "8",
   "statPays": "6",
   "statSatisfaction": "98",
-  "formationPrix": "250 000 FCFA",
+  "formationPrix": "450 000 FCFA",
   "formationSession": "Fin juillet 2026",
   "contactPhone": "+225 05 76 91 18 99",
   "contactAddress": "Abidjan, Marcory",

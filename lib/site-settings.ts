@@ -235,7 +235,7 @@ function buildDefaultSiteSettings() {
         sessionSubtitle: 'Durée : 1 semaine intensive — Places limitées',
         pricingTitle: "S'inscrire à la formation",
         pricingSubtitle: 'Formation complète Canada',
-        pricingStatus: '250 000 FCFA',
+        pricingStatus: '450 000 FCFA',
         pricingNote: 'Paiement en ligne sécurisé — Accès immédiat',
         features: [
           'Accès à la formation complète',
@@ -293,7 +293,7 @@ function buildDefaultSiteSettings() {
         badge: 'PLACES LIMITÉES',
         title: 'Formation Canada',
         subtitle: 'Toutes les démarches de A à Z',
-        price: '250 000 FCFA',
+        price: '450 000 FCFA',
         note: 'Paiement en ligne sécurisé — Accès immédiat',
         urgency: 'Places limitées — Session juillet 2026',
         features: [
@@ -480,6 +480,9 @@ export function normalizeSiteSettings(raw?: Record<string, unknown> | null): Sit
   // Force the primary contact info so database values cannot override it
   merged.contact.phone = '+225 05 76 91 18 99';
   merged.contact.whatsappNumber = PRIMARY_WHATSAPP_LINK;
+  if (merged.formationCanada?.pricing) {
+    merged.formationCanada.pricing.price = '450 000 FCFA';
+  }
 
   // Force WhatsApp link in social links and destinations
   if (merged.socialLinks) {
