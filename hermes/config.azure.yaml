@@ -9,7 +9,7 @@ model:
   base_url: https://<ressource>.openai.azure.com/openai/v1
   api_mode: chat_completions
   auth_mode: entra_id
-  default: gpt-4o
+  default: gpt-4o-mini
   context_length: 128000
 
 # --- Option B : clé API (mettre AZURE_FOUNDRY_API_KEY dans ~/.hermes/.env)
@@ -17,5 +17,5 @@ model:
 #   provider: azure-foundry
 #   base_url: https://<ressource>.openai.azure.com/openai/v1
 #   api_mode: chat_completions
-#   default: gpt-4o
+#   default: gpt-4o-mini
 #   context_length: 128000

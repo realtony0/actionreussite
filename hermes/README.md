@@ -23,8 +23,8 @@ hermes/
 
 ## 1. Ce qu'il faut avant de commencer
 
-- Un abonnement **Azure** : il sert à la fois pour le serveur (une VM Linux) et pour le modèle IA
-  (Azure OpenAI dans Microsoft Foundry).
+- L'abonnement **Azure for Students** (100 $ de crédits) : il paie le modèle IA (Azure OpenAI dans
+  Microsoft Foundry) et fournit le serveur (une petite VM Linux comprise dans les services gratuits).
 - Le téléphone du propriétaire, avec Telegram.
 - **Un numéro WhatsApp dédié à l'agence** (voir l'avertissement en section 5).
 - Une boîte email dédiée (ex. `contact@actionreussite.com` ou un Gmail) avec un mot de passe d'application.
@@ -35,11 +35,19 @@ hermes/
 ### 2a. Le modèle IA (Microsoft Foundry)
 
 1. Sur [ai.azure.com](https://ai.azure.com), créer une ressource Azure OpenAI / Foundry (région
-   proche, ex. *France Central*) et **déployer un modèle de chat** (ex. `gpt-4o`, ou un modèle plus récent
-   s'il est proposé). Noter le **nom de la ressource** et le **nom du déploiement**.
+   proche, ex. *Sweden Central* ou *France Central*) et **déployer un modèle de chat**, de type
+   *Global Standard*. Pour faire durer les crédits, prendre un modèle « mini » (`gpt-4o-mini` ou `gpt-4.1-mini`) :
+   quelques dollars par mois suffisent pour des centaines de messages. Noter le **nom de la ressource** et
+   le **nom du déploiement**.
 2. Le point d'accès à utiliser est `https://<ressource>.openai.azure.com/openai/v1`.
 
 Hermes gère Azure en natif (fournisseur `azure-foundry`).
+
+> **Azure for Students :** le quota de modèles est réduit, et certains modèles ou certaines régions peuvent
+> être refusés. Si le déploiement est refusé, essayer une autre région ou un autre modèle « mini ».
+> Quand les 100 $ sont épuisés, les services s'arrêtent : pas de facture surprise. Les crédits se
+> renouvellent chaque année tant que vous êtes étudiant. Suivre la consommation dans
+> *Cost Management* sur le portail.
 
 ### 2b. Le serveur (VM Azure)
 
@@ -51,7 +59,7 @@ az group create --name actionreussite-rg --location francecentral
 ```
 
 ```bash
-az vm create --resource-group actionreussite-rg --name hermes-vm --image Ubuntu2404 --size Standard_B2s --admin-username hermes --generate-ssh-keys --assign-identity
+az vm create --resource-group actionreussite-rg --name hermes-vm --image Ubuntu2404 --size Standard_B1s --admin-username hermes --generate-ssh-keys --assign-identity
 ```
 
 Donner à la VM le droit d'utiliser le modèle (remplacer `<ressource>` et `<groupe-de-la-ressource>`) :
@@ -69,14 +77,23 @@ Se connecter à la VM (l'IP publique est affichée par `az vm create`) :
 ssh hermes@<ip-publique>
 ```
 
-`Standard_B2s` (2 vCPU, 4 Go) coûte environ 30 à 40 $/mois. `Standard_B1ms` (2 Go) est moins cher mais
-juste. Aucun port entrant n'est nécessaire en plus de SSH : Telegram, WhatsApp et l'email fonctionnent en
+`Standard_B1s` (1 vCPU, 1 Go) fait partie des services gratuits d'Azure for Students (750 h/mois pendant
+12 mois, soit une VM allumée en permanence), avec un disque de 64 Go gratuit. Une VM plus grosse
+(ex. `Standard_B2s`, environ 30 à 40 $/mois) viderait les crédits en trois mois. Aucun port entrant n'est nécessaire en plus de SSH : Telegram, WhatsApp et l'email fonctionnent en
 connexion sortante.
 
 ### 2c. Installer Hermes sur la VM
 
+1 Go de mémoire, c'est juste : ajouter 2 Go de swap avant d'installer.
+
 ```bash
-curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
+sudo fallocate -l 2G /swapfile && sudo chmod 600 /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile && echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+```
+
+Installer Hermes sans le navigateur intégré (inutile ici et trop lourd pour cette VM) :
+
+```bash
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash -s -- --skip-browser
 ```
 
 ```bash
@@ -96,6 +113,11 @@ hermes doctor
 ```
 
 Sans identité managée, choisir « API key » et mettre `AZURE_FOUNDRY_API_KEY` dans `~/.hermes/.env`.
+
+Si Azure OpenAI reste refusé sur l'abonnement étudiant, il existe une solution gratuite, la même que pour
+l'agent du cabinet NDAO : Groq. Dans `hermes model`, choisir « Custom endpoint » avec l'URL
+`https://api.groq.com/openai/v1`, une clé de console.groq.com et le modèle `llama-3.3-70b-versatile`.
+La VM Azure reste utilisable pour héberger le bot.
 
 ## 3. Créer le bot Telegram du propriétaire
 
