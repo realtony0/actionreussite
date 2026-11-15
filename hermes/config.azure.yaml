@@ -1,0 +1,21 @@
+# Bloc `model:` à mettre dans ~/.hermes/config.yaml pour utiliser Azure (Microsoft Foundry).
+# Le plus simple reste `hermes model` → "Azure Foundry", qui écrit ce bloc tout seul.
+# Remplacer <ressource> par le nom de la ressource Azure OpenAI / Foundry
+# et `default` par le NOM DU DÉPLOIEMENT créé dans Foundry (pas forcément le nom du modèle).
+
+# --- Option A (recommandée sur une VM Azure) : identité managée, aucune clé à stocker
+model:
+  provider: azure-foundry
+  base_url: https://<ressource>.openai.azure.com/openai/v1
+  api_mode: chat_completions
+  auth_mode: entra_id
+  default: gpt-4o
+  context_length: 128000
+
+# --- Option B : clé API (mettre AZURE_FOUNDRY_API_KEY dans ~/.hermes/.env)
+# model:
+#   provider: azure-foundry
+#   base_url: https://<ressource>.openai.azure.com/openai/v1
+#   api_mode: chat_completions
+#   default: gpt-4o
+#   context_length: 128000

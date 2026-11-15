@@ -12,6 +12,7 @@ un agent IA auto-hébergé, pour qu'il :
 ```
 hermes/
 ├── SOUL.md                       # personnalité et règles du bot
+├── config.azure.yaml             # modèle IA sur Azure (Microsoft Foundry)
 ├── env.example                   # variables à mettre dans ~/.hermes/.env
 ├── install.sh                    # copie skills + SOUL.md dans ~/.hermes
 ├── scripts/alertes-demandes.sh   # tâche planifiée : nouvelles demandes → Telegram
@@ -22,14 +23,57 @@ hermes/
 
 ## 1. Ce qu'il faut avant de commencer
 
-- Un petit serveur Linux allumé 24h/24 (un VPS à ~5 $/mois suffit).
-- Une clé API pour le modèle IA (OpenRouter ou Anthropic).
+- Un abonnement **Azure** : il sert à la fois pour le serveur (une VM Linux) et pour le modèle IA
+  (Azure OpenAI dans Microsoft Foundry).
 - Le téléphone du propriétaire, avec Telegram.
 - **Un numéro WhatsApp dédié à l'agence** (voir l'avertissement en section 5).
 - Une boîte email dédiée (ex. `contact@actionreussite.com` ou un Gmail) avec un mot de passe d'application.
 - L'accès au projet Supabase du site.
 
-## 2. Installer Hermes sur le serveur
+## 2. Azure : le serveur et le modèle IA
+
+### 2a. Le modèle IA (Microsoft Foundry)
+
+1. Sur [ai.azure.com](https://ai.azure.com), créer une ressource Azure OpenAI / Foundry (région
+   proche, ex. *France Central*) et **déployer un modèle de chat** (ex. `gpt-4o`, ou un modèle plus récent
+   s'il est proposé). Noter le **nom de la ressource** et le **nom du déploiement**.
+2. Le point d'accès à utiliser est `https://<ressource>.openai.azure.com/openai/v1`.
+
+Hermes gère Azure en natif (fournisseur `azure-foundry`).
+
+### 2b. Le serveur (VM Azure)
+
+Avec l'[Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) (ou le Cloud Shell du portail).
+La VM reçoit une **identité managée**, donc aucune clé IA n'est stockée sur le serveur :
+
+```bash
+az group create --name actionreussite-rg --location francecentral
+```
+
+```bash
+az vm create --resource-group actionreussite-rg --name hermes-vm --image Ubuntu2404 --size Standard_B2s --admin-username hermes --generate-ssh-keys --assign-identity
+```
+
+Donner à la VM le droit d'utiliser le modèle (remplacer `<ressource>` et `<groupe-de-la-ressource>`) :
+
+```bash
+az role assignment create --assignee "$(az vm show -g actionreussite-rg -n hermes-vm --query identity.principalId -o tsv)" --role "Azure AI User" --scope "$(az cognitiveservices account show -g <groupe-de-la-ressource> -n <ressource> --query id -o tsv)"
+```
+
+Si le rôle « Azure AI User » n'existe pas sur votre abonnement, prendre « Cognitive Services OpenAI User ».
+Le rôle peut mettre quelques minutes à s'appliquer.
+
+Se connecter à la VM (l'IP publique est affichée par `az vm create`) :
+
+```bash
+ssh hermes@<ip-publique>
+```
+
+`Standard_B2s` (2 vCPU, 4 Go) coûte environ 30 à 40 $/mois. `Standard_B1ms` (2 Go) est moins cher mais
+juste. Aucun port entrant n'est nécessaire en plus de SSH : Telegram, WhatsApp et l'email fonctionnent en
+connexion sortante.
+
+### 2c. Installer Hermes sur la VM
 
 ```bash
 curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
@@ -43,8 +87,15 @@ source ~/.bashrc
 hermes model
 ```
 
-`hermes model` sert à choisir le fournisseur (OpenRouter ou Anthropic) et le modèle. Un modèle
-Claude Sonnet récent est un bon choix pour du service client en français.
+Dans `hermes model`, choisir **Azure Foundry**, coller l'URL `https://<ressource>.openai.azure.com/openai/v1`,
+puis l'authentification **Microsoft Entra ID** (l'identité managée de la VM), et le déploiement.
+Le bloc obtenu doit ressembler à `hermes/config.azure.yaml`. Vérifier avec :
+
+```bash
+hermes doctor
+```
+
+Sans identité managée, choisir « API key » et mettre `AZURE_FOUNDRY_API_KEY` dans `~/.hermes/.env`.
 
 ## 3. Créer le bot Telegram du propriétaire
 
@@ -69,6 +120,8 @@ git clone https://github.com/realtony0/actionreussite.git && cd actionreussite
 ```bash
 bash hermes/install.sh
 ```
+
+Si le repo est privé, copier plutôt le dossier `hermes/` depuis votre PC : `scp -r hermes hermes@<ip-publique>:~/`, puis `bash ~/hermes/install.sh`.
 
 Tester :
 
