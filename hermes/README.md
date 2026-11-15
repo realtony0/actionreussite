@@ -9,8 +9,12 @@ un agent IA auto-hébergé, pour qu'il :
 | **WhatsApp** (les clients) | répondre aux questions simples, transmettre le reste au propriétaire |
 | **Email** (les clients) | même chose par email |
 
+> **Pour tester tout de suite (gratuit, sur un Mac, WhatsApp + Telegram) :** voir
+> [`DEMARRAGE-RAPIDE.md`](DEMARRAGE-RAPIDE.md). Ce README décrit l'installation complète sur Azure.
+
 ```
 hermes/
+├── DEMARRAGE-RAPIDE.md           # test gratuit sur Mac : WhatsApp + Telegram
 ├── SOUL.md                       # personnalité et règles du bot
 ├── config.azure.yaml             # modèle IA sur Azure (Microsoft Foundry)
 ├── env.example                   # variables à mettre dans ~/.hermes/.env
