@@ -73,18 +73,43 @@ WHATSAPP_MODE=bot
 WHATSAPP_ALLOW_ALL_USERS=true
 ```
 
-## 5. WhatsApp (les clients)
+## 5. WhatsApp (les clients) : avec le WhatsApp Business existant
 
-> ⚠️ Prendre un **numéro dédié** (une puce de l'agence), pas le numéro perso du proprio. Le bot passe
-> par WhatsApp Web : un numéro qui répond automatiquement peut être restreint par WhatsApp. Pour le
-> tester, une deuxième puce suffit.
+Le proprio a déjà **WhatsApp Business** sur le numéro de l'agence : on y branche le bot directement,
+pas besoin d'une deuxième puce. Le bot devient un « appareil connecté », comme WhatsApp Web. L'appli
+continue de marcher normalement sur le téléphone.
 
 ```bash
 hermes whatsapp
 ```
 
-Un QR code s'affiche. Sur le téléphone du numéro dédié, aller dans WhatsApp, **Paramètres → Appareils
-connectés → Connecter un appareil**, puis scanner.
+Un QR code s'affiche. Sur le téléphone de l'agence, dans **WhatsApp Business** : **⋮ / Paramètres →
+Appareils connectés → Connecter un appareil**, puis scanner.
+
+> ⚠️ **À lire avant :**
+> - **Risque sur le numéro :** le bot passe par WhatsApp Web (non officiel). WhatsApp peut restreindre un
+>   numéro qui répond automatiquement, et c'est le numéro affiché partout sur le site. Pour limiter le
+>   risque : commencer par quelques numéros de test (ci-dessous), puis ouvrir à tous. Le bot doit répondre
+>   seulement quand on lui écrit, jamais envoyer de messages en masse.
+> - **Double réponse :** si le proprio répond aussi à la main depuis son téléphone, le client peut recevoir
+>   deux réponses. Désactiver dans WhatsApp Business le message d'accueil et le message d'absence
+>   automatiques (Outils professionnels → Message d'accueil / Message d'absence), sinon le client reçoit
+>   ces messages en plus de ceux du bot.
+> - **Pour débrancher le bot :** dans Appareils connectés, déconnecter l'appareil.
+
+**Phase de test** : dans `~/.hermes/.env`, remplacer `WHATSAPP_ALLOW_ALL_USERS=true` par une liste de
+numéros de test (indicatif pays, sans `+` ni espaces) :
+
+```
+WHATSAPP_ALLOWED_USERS=2250700000000,2250500000000
+```
+
+Le bot ne répond alors qu'à ces numéros, et les vrais clients ne voient rien. Une fois le test bon,
+remettre `WHATSAPP_ALLOW_ALL_USERS=true` et supprimer la ligne `WHATSAPP_ALLOWED_USERS`.
+
+Plus tard, la version 100 % officielle sera l'API WhatsApp Business de Meta (`hermes whatsapp-cloud`).
+Avec la « coexistence » de Meta, le numéro reste utilisable dans l'appli. Il faut un compte Meta Business
+et un serveur, à faire au moment d'Azure.
 
 ## 6. Lancer le bot
 
@@ -99,7 +124,7 @@ taper `Ctrl+C` pour arrêter le bot.
 
 - **Telegram :** le proprio écrit « Salut, tu es qui ? » au bot. Il doit répondre en se présentant
   comme Hermes, l'assistant d'Action Réussite.
-- **WhatsApp :** depuis un **autre** téléphone, écrire au numéro dédié « Bonjour, quelles destinations
+- **WhatsApp :** depuis un numéro de test, écrire au numéro de l'agence « Bonjour, quelles destinations
   proposez-vous ? ». Il doit répondre poliment, sans rien promettre.
 - **Transfert :** écrire sur WhatsApp « J'ai payé mais je n'ai pas de nouvelles de mon dossier ». Le
   client doit recevoir « un conseiller vous recontacte », et le proprio un résumé sur Telegram.
